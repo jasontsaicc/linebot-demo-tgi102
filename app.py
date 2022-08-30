@@ -16,7 +16,9 @@ ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
 config = configparser.ConfigParser()
 config.read('config.ini')
 
+# 確認 token 是否正確
 line_bot_api = LineBotApi(config.get('line-bot', 'channel_access_token'))
+# 確認 secret 是否正確
 handler = WebhookHandler(config.get('line-bot', 'channel_secret'))
 my_line_id = config.get('line-bot', 'my_line_id')
 end_point = config.get('line-bot', 'end_point')
@@ -140,6 +142,7 @@ HEADER = {
 def linebot():
     body = request.get_data(as_text=True)
     json_data = json.loads(body)
+    print(body)
     print(json_data)
     return 'OK'
 
