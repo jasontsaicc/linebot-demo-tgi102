@@ -8,10 +8,10 @@ import json
 import configparser
 import os
 from urllib import parse
+
 app = Flask(__name__, static_url_path='/static')
 UPLOAD_FOLDER = 'static'
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
-
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -28,9 +28,8 @@ HEADER = {
     'Authorization': F'Bearer {config.get("line-bot", "channel_access_token")}'
 }
 
-
-@app.route("/", methods=['POST', 'GET'])
-def index():
+# @app.route("/", methods=['POST', 'GET'])
+"""def index():
     if request.method == 'GET':
         return 'ok'
     body = request.json
@@ -134,6 +133,15 @@ def index():
                 replyMessage(payload)
 
     return 'OK'
+"""
+
+
+@app.route("/", methods=['POST', 'GET'])
+def linebot():
+    body = request.get_data(as_text=True)
+    json_data = json.loads(body)
+    print(json_data)
+    return 'OK'
 
 
 @app.route("/callback", methods=['POST'])
@@ -156,7 +164,7 @@ def pretty_echo(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text)
-        )
+    )
 
 
 @app.route("/sendTextMessageToMe", methods=['POST'])
@@ -225,7 +233,6 @@ def getImageMessage(originalContentUrl):
 
 
 def replyMessage(payload):
-
     r = requests.post('https://api.line.me/v2/bot/message/reply', data=json.dumps(payload), headers=HEADER)
     print(r.content)
     return 'OK'
@@ -270,11 +277,11 @@ def upload_file():
             print(img_path)
             payload["to"] = my_line_id
             payload["messages"] = [getImageMessage(F"{end_point}/{img_path}"),
-                {
-                    "type": "text",
-                    "text": F"年紀：{age}\n性別：{gender}"
-                }
-            ]
+                                   {
+                                       "type": "text",
+                                       "text": F"年紀：{age}\n性別：{gender}"
+                                   }
+                                   ]
             pushMessage(payload)
     return 'OK'
 
@@ -288,12 +295,13 @@ def line_login():
         if code and state:
             HEADERS = {'Content-Type': 'application/x-www-form-urlencoded'}
             url = "https://api.line.me/oauth2/v2.1/token"
-            FormData = {"grant_type": 'authorization_code', "code": code, "redirect_uri": F"{end_point}/line_login", "client_id": line_login_id, "client_secret":line_login_secret}
+            FormData = {"grant_type": 'authorization_code', "code": code, "redirect_uri": F"{end_point}/line_login",
+                        "client_id": line_login_id, "client_secret": line_login_secret}
             data = parse.urlencode(FormData)
             content = requests.post(url=url, headers=HEADERS, data=data).text
             content = json.loads(content)
             url = "https://api.line.me/v2/profile"
-            HEADERS = {'Authorization': content["token_type"]+" "+content["access_token"]}
+            HEADERS = {'Authorization': content["token_type"] + " " + content["access_token"]}
             content = requests.get(url=url, headers=HEADERS).text
             content = json.loads(content)
             name = content["displayName"]
@@ -302,7 +310,7 @@ def line_login():
             statusMessage = content["statusMessage"]
             print(content)
             return render_template('profile.html', name=name, pictureURL=
-                                   pictureURL, userID=userID, statusMessage=
+            pictureURL, userID=userID, statusMessage=
                                    statusMessage)
         else:
             return render_template('login.html', client_id=line_login_id,
