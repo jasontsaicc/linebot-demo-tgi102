@@ -219,7 +219,7 @@ def getPlayStickerMessage():
     message['type'] = "sticker"
     message['packageId'] = "446"
     message['stickerId'] = "1988"
-    print(message)
+    print("message:     ", message)
     return message
 
 
