@@ -224,7 +224,6 @@ def getPlayStickerMessage():
 
 
 def getTaipei101LocationMessage():
-    message = dict()
     message = {
   "type": "location",
   "title": "台北101",
@@ -232,6 +231,7 @@ def getTaipei101LocationMessage():
   "latitude": 25.0334704,
   "longitude": 121.5639372
 }
+    return message
 
 
 def getMRTVideoMessage(originalContentUrl=F"{end_point}/static/taipei_101_video.mp4"):
