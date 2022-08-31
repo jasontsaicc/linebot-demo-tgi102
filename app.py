@@ -180,23 +180,19 @@ def getNameEmojiMessage():
     lookUpStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     productId = "5ac21a8c040ab15980c9b43f"
     name = "Jason"
-    name_count = len(name)
-    message = {
-    "type": "text",
-    "text": "$$$$$",
-    "emojis": [
-      {
-        "index": 0,
-        "productId": "5ac21a8c040ab15980c9b43f",
-        "emojiId": "010"
-      },
-      {
-        "index": 1,
-        "productId": "5ac21a8c040ab15980c9b43f",
-        "emojiId": "027"
-      }
-    ]
-}
+    message = dict()
+    message['type'] = "text"
+    message['text'] = "".join("$" for i in range(len(name)))
+    emoji_list = list()
+    for i, nchar in enumerate(name):
+        emoji_list.append(
+            {
+                "index": i,
+                "productId": productId,
+                "emojiId": f"{lookUpStr.index(nchar) + 1 :03}"
+            }
+        )
+        message["emojis"] = emoji_list
     return message
 
 
