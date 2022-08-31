@@ -252,18 +252,16 @@ def getMRTSoundMessage():
 
 
 def getTaipei101ImageMessage(originalContentUrl=F"{end_point}/static/taipei_101.jpeg"):
-    message = {
-  "type": "image",
-  "originalContentUrl": originalContentUrl,
-  "previewImageUrl": originalContentUrl
-}
-
     return getImageMessage(originalContentUrl)
 
 
 
 def getImageMessage(originalContentUrl):
-    message = dict()
+    message = {
+  "type": "image",
+  "originalContentUrl": originalContentUrl,
+  "previewImageUrl": originalContentUrl
+}
     return message
 
 
