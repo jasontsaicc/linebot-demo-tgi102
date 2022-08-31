@@ -234,8 +234,12 @@ def getTaipei101LocationMessage():
 }
 
 
-def getMRTVideoMessage():
-    message = dict()
+def getMRTVideoMessage(originalContentUrl=F"{end_point}/static/taipei_101_video.mp4"):
+    message ={
+  "type": "video",
+  "originalContentUrl": originalContentUrl,
+  "previewImageUrl": originalContentUrl,
+}
     return message
 
 
