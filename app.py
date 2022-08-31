@@ -30,8 +30,8 @@ HEADER = {
     'Authorization': F'Bearer {config.get("line-bot", "channel_access_token")}'
 }
 
-# @app.route("/", methods=['POST', 'GET'])
-"""def index():
+@app.route("/", methods=['POST', 'GET'])
+def index():
     if request.method == 'GET':
         return 'ok'
     body = request.json
@@ -135,16 +135,16 @@ HEADER = {
                 replyMessage(payload)
 
     return 'OK'
-"""
 
 
-@app.route("/", methods=['POST', 'GET'])
-def linebot():
-    body = request.get_data(as_text=True)
-    json_data = json.loads(body)
-    print(body)
-    print(json_data)
-    return 'OK'
+
+# @app.route("/", methods=['POST', 'GET'])
+# def linebot():
+#     body = request.get_data(as_text=True)
+#     json_data = json.loads(body)
+#     print(body)
+#     print(json_data)
+#     return 'OK'
 
 
 @app.route("/callback", methods=['POST'])
